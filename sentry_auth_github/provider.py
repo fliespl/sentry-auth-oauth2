@@ -10,14 +10,14 @@ from .constants import (
     AUTHORIZE_URL, ACCESS_TOKEN_URL, CLIENT_ID, CLIENT_SECRET, SCOPE
 )
 from .views import (
-    ConfirmEmail, FetchUser, SelectOrganization, GitHubConfigureView
+    ConfirmEmail, FetchUser, GitHubConfigureView
 )
 
 
 class GitHubOAuth2Provider(OAuth2Provider):
     access_token_url = ACCESS_TOKEN_URL
     authorize_url = AUTHORIZE_URL
-    name = 'GitHub'
+    name = 'OAuth2'
     client_id = CLIENT_ID
     client_secret = CLIENT_SECRET
 
@@ -50,10 +50,6 @@ class GitHubOAuth2Provider(OAuth2Provider):
 
     def get_setup_pipeline(self):
         pipeline = self.get_auth_pipeline()
-        pipeline.append(SelectOrganization(
-            client_id=self.client_id,
-            client_secret=self.client_secret,
-        ))
         return pipeline
 
     def get_refresh_token_url(self):
@@ -61,10 +57,6 @@ class GitHubOAuth2Provider(OAuth2Provider):
 
     def build_config(self, state):
         return {
-            'org': {
-                'id': state['org']['id'],
-                'name': state['org']['login'],
-            },
         }
 
     def build_identity(self, state):
@@ -82,7 +74,7 @@ class GitHubOAuth2Provider(OAuth2Provider):
         access_token = auth_identity.data['access_token']
 
         try:
-            if not client.is_org_member(access_token, self.org['id']):
+            if not client.get_user(access_token):
                 raise IdentityNotValid
         except GitHubApiError as e:
             raise IdentityNotValid(e)
