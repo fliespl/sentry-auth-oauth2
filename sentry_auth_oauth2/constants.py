@@ -18,8 +18,7 @@ ERR_NO_VERIFIED_PRIMARY_EMAIL = 'We were unable to find a verified, primary emai
 
 ERR_NO_SINGLE_VERIFIED_PRIMARY_EMAIL = 'We were unable to find a single verified, primary email address associated with your Generic acount.'
 
-# we request repo as we share scopes with the other Generic integration
-SCOPE = 'user:email,read:org,repo'
+SCOPE = getattr(settings, 'OAUTH2_SCOPE', 'user:email')
 
 # deprecated please use OAUTH2_API_DOMAIN and GITHUB_BASE_DOMAIN
 DOMAIN = getattr(settings, 'OAUTH2_DOMAIN', 'api.oauth2.com')
