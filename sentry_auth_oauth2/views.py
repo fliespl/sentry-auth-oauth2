@@ -4,7 +4,7 @@ from django import forms
 from sentry.auth.view import AuthView, ConfigureView
 from sentry.models import AuthIdentity
 
-from .client import GitHubClient
+from .client import GenericClient
 from .constants import ERR_NO_ORG_ACCESS
 from .constants import REQUIRE_VERIFIED_EMAIL
 from .constants import (
@@ -25,7 +25,7 @@ def _get_name_from_email(email):
 class FetchUser(AuthView):
     def __init__(self, client_id, client_secret, org=None, *args, **kwargs):
         self.org = org
-        self.client = GitHubClient(client_id, client_secret)
+        self.client = GenericClient(client_id, client_secret)
         super(FetchUser, self).__init__(*args, **kwargs)
 
     def handle(self, request, helper):
@@ -98,7 +98,7 @@ class ConfirmEmail(AuthView):
             helper.bind_state('user', user)
             return helper.next_step()
 
-        return self.respond('sentry_auth_github/enter-email.html', {
+        return self.respond('sentry_auth_oauth2/enter-email.html', {
             'form': form,
         })
 
@@ -117,7 +117,7 @@ class SelectOrganizationForm(forms.Form):
 
 class SelectOrganization(AuthView):
     def __init__(self, client_id, client_secret, *args, **kwargs):
-        self.client = GitHubClient(client_id, client_secret)
+        self.client = GenericClient(client_id, client_secret)
         super(SelectOrganization, self).__init__(*args, **kwargs)
 
     def handle(self, request, helper):
@@ -131,12 +131,12 @@ class SelectOrganization(AuthView):
             helper.bind_state('org', org)
             return helper.next_step()
 
-        return self.respond('sentry_auth_github/select-organization.html', {
+        return self.respond('sentry_auth_oauth2/select-organization.html', {
             'form': form,
             'org_list': org_list,
         })
 
 
-class GitHubConfigureView(ConfigureView):
+class GenericConfigureView(ConfigureView):
     def dispatch(self, request, organization, auth_provider):
-        return self.render('sentry_auth_github/configure.html')
+        return self.render('sentry_auth_oauth2/configure.html')

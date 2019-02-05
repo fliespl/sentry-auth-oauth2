@@ -7,13 +7,13 @@ from sentry.utils import json
 from .constants import API_DOMAIN
 
 
-class GitHubApiError(Exception):
+class GenericApiError(Exception):
     def __init__(self, message='', status=0):
-        super(GitHubApiError, self).__init__(message)
+        super(GenericApiError, self).__init__(message)
         self.status = status
 
 
-class GitHubClient(object):
+class GenericClient(object):
     def __init__(self, client_id, client_secret):
         self.client_id = client_id
         self.client_secret = client_secret
@@ -35,9 +35,9 @@ class GitHubClient(object):
                 headers=headers,
             )
         except RequestException as e:
-            raise GitHubApiError(unicode(e), status=getattr(e, 'status_code', 0))
+            raise GenericApiError(unicode(e), status=getattr(e, 'status_code', 0))
         if req.status_code < 200 or req.status_code >= 300:
-            raise GitHubApiError(req.content, status=req.status_code)
+            raise GenericApiError(req.content, status=req.status_code)
         return json.loads(req.content)
 
     def get_org_list(self, access_token):

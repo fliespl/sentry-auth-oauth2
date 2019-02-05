@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-sentry-auth-github
+sentry-auth-oauth2
 ==================
 
 :copyright: (c) 2016 Functional Software, Inc
@@ -18,12 +18,12 @@ tests_require = [
 ]
 
 setup(
-    name='sentry-auth-github',
+    name='sentry-auth-oauth2',
     version='0.1.0',
     author='Sentry',
     author_email='support@getsentry.com',
     url='https://www.getsentry.com',
-    description='GitHub authentication provider for Sentry',
+    description='Generic authentication provider for Sentry',
     long_description=__doc__,
     license='Apache 2.0',
     packages=find_packages(exclude=['tests']),
@@ -34,7 +34,7 @@ setup(
     include_package_data=True,
     entry_points={
         'sentry.apps': [
-            'auth_github = sentry_auth_github',
+            'auth_oauth2 = sentry_auth_oauth2',
         ],
     },
     classifiers=[

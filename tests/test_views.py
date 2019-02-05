@@ -2,7 +2,7 @@ from __future__ import absolute_import, print_function
 
 import pytest
 
-from sentry_auth_github.views import _get_name_from_email
+from sentry_auth_oauth2.views import _get_name_from_email
 
 expected_data = [
     ('john.smith@example.com', 'John Smith'),

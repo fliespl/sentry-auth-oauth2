@@ -5,16 +5,16 @@ from sentry.auth.providers.oauth2 import (
     OAuth2Callback, OAuth2Provider, OAuth2Login
 )
 
-from .client import GitHubApiError, GitHubClient
+from .client import GenericApiError, GenericClient
 from .constants import (
     AUTHORIZE_URL, ACCESS_TOKEN_URL, CLIENT_ID, CLIENT_SECRET, SCOPE
 )
 from .views import (
-    ConfirmEmail, FetchUser, GitHubConfigureView
+    ConfirmEmail, FetchUser, GenericConfigureView
 )
 
 
-class GitHubOAuth2Provider(OAuth2Provider):
+class GenericOAuth2Provider(OAuth2Provider):
     access_token_url = ACCESS_TOKEN_URL
     authorize_url = AUTHORIZE_URL
     name = 'OAuth2'
@@ -22,11 +22,11 @@ class GitHubOAuth2Provider(OAuth2Provider):
     client_secret = CLIENT_SECRET
 
     def __init__(self, org=None, **config):
-        super(GitHubOAuth2Provider, self).__init__(**config)
+        super(GenericOAuth2Provider, self).__init__(**config)
         self.org = org
 
     def get_configure_view(self):
-        return GitHubConfigureView.as_view()
+        return GenericConfigureView.as_view()
 
     def get_auth_pipeline(self):
         return [
@@ -70,11 +70,11 @@ class GitHubOAuth2Provider(OAuth2Provider):
         }
 
     def refresh_identity(self, auth_identity):
-        client = GitHubClient(self.client_id, self.client_secret)
+        client = GenericClient(self.client_id, self.client_secret)
         access_token = auth_identity.data['access_token']
 
         try:
             if not client.get_user(access_token):
                 raise IdentityNotValid
-        except GitHubApiError as e:
+        except GenericApiError as e:
             raise IdentityNotValid(e)
