@@ -26,7 +26,7 @@ class GenericClient(object):
         }
 
         headers = {
-            'Authorization': 'token {0}'.format(access_token),
+            'Authorization': 'Bearer {0}'.format(access_token),
         }
 
         try:
