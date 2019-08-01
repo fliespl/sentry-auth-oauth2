@@ -7,8 +7,10 @@ from sentry.auth.providers.oauth2 import (
 
 from .client import GenericApiError, GenericClient
 from .constants import (
-    AUTHORIZE_URL, ACCESS_TOKEN_URL, CLIENT_ID, CLIENT_SECRET, SCOPE
+    AUTHORIZE_URL, ACCESS_TOKEN_URL, CLIENT_ID, CLIENT_SECRET, SCOPE,
+    UNIQUE_USERID_FIELD
 )
+
 from .views import (
     ConfirmEmail, FetchUser, GenericConfigureView
 )
@@ -63,7 +65,7 @@ class GenericOAuth2Provider(OAuth2Provider):
         data = state['data']
         user_data = state['user']
         return {
-            'id': user_data['id'],
+            'id': user_data[UNIQUE_USERID_FIELD],
             'email': user_data['email'],
             'name': user_data['name'],
             'data': self.get_oauth_data(data),

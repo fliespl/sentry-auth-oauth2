@@ -37,19 +37,18 @@ Verified email addresses can optionally be required:
     OAUTH2_REQUIRE_VERIFIED_EMAIL = True
 
 
-Optionally you may also specify the domain (for GHE users):
+The default unique id field is called `id`, but can be changed:
 
 .. code-block:: python
 
-    OAUTH2_BASE_DOMAIN = "git.example.com"
-
-    OAUTH2_API_DOMAIN = "api.git.example.com"
+    OAUTH2_UNIQUE_USERID_FIELD = 'user_id'
 
 
-If Subdomain isolation is disabled in GHE:
+You will also need to specify the domains:
 
 .. code-block:: python
 
-    OAUTH2_BASE_DOMAIN = "git.example.com"
+    OAUTH2_BASE_DOMAIN = "oauth2.example.com"
 
-    OAUTH2_API_DOMAIN = "git.example.com/api/v3"
+    OAUTH2_API_DOMAIN = "oauth2.example.com/api/v3"
+
