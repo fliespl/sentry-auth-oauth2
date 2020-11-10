@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 
 
 install_requires = [
-    'sentry>=7.0.0',
+    'sentry>=10.0.0',
 ]
 
 tests_require = [
@@ -19,7 +19,7 @@ tests_require = [
 
 setup(
     name='sentry-auth-oauth2',
-    version='0.1.0',
+    version='0.2.0',
     author='Sentry',
     author_email='support@getsentry.com',
     url='https://www.getsentry.com',
@@ -34,7 +34,7 @@ setup(
     include_package_data=True,
     entry_points={
         'sentry.apps': [
-            'auth_oauth2 = sentry_auth_oauth2',
+            'auth_oauth2 = sentry_auth_oauth2.apps.Config',
         ],
     },
     classifiers=[
