@@ -1,5 +1,3 @@
-from __future__ import absolute_import, print_function
-
 from requests.exceptions import RequestException
 from sentry import http
 from sentry.utils import json

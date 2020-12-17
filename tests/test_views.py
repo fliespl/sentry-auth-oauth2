@@ -1,5 +1,3 @@
-from __future__ import absolute_import, print_function
-
 import pytest
 
 from sentry_auth_oauth2.views import _get_name_from_email

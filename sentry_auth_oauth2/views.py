@@ -1,5 +1,3 @@
-from __future__ import absolute_import, print_function
-
 from django import forms
 from sentry.auth.view import AuthView, ConfigureView
 from sentry.models import AuthIdentity

@@ -43,4 +43,5 @@ setup(
         'Operating System :: OS Independent',
         'Topic :: Software Development'
     ],
+    python_requires='>=3.6',
 )
