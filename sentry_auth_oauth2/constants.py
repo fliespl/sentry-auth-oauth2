@@ -20,6 +20,8 @@ ERR_NO_SINGLE_VERIFIED_PRIMARY_EMAIL = 'We were unable to find a single verified
 
 SCOPE = getattr(settings, 'OAUTH2_SCOPE', 'user:email')
 
+API_DOMAIN = getattr(settings, 'OAUTH2_API_DOMAIN','oauth2.com/api')
+
 BASE_DOMAIN = getattr(settings, 'OAUTH2_BASE_DOMAIN', 'oauth2.com')
 
 ACCESS_TOKEN_URL = 'https://{0}/oauth/v2/token'.format(BASE_DOMAIN)
