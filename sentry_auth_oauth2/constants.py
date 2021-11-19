@@ -20,11 +20,6 @@ ERR_NO_SINGLE_VERIFIED_PRIMARY_EMAIL = 'We were unable to find a single verified
 
 SCOPE = getattr(settings, 'OAUTH2_SCOPE', 'user:email')
 
-# deprecated please use OAUTH2_API_DOMAIN and GITHUB_BASE_DOMAIN
-DOMAIN = getattr(settings, 'OAUTH2_DOMAIN', 'api.oauth2.com')
+ACCESS_TOKEN_URL = 'https://{0}/oauth/v2/token'.format(BASE_DOMAIN)
 
-BASE_DOMAIN = getattr(settings, 'OAUTH2_BASE_DOMAIN', 'oauth2.com')
-API_DOMAIN = getattr(settings, 'OAUTH2_API_DOMAIN', DOMAIN)
-
-ACCESS_TOKEN_URL = 'https://{0}/oauth/access_token'.format(BASE_DOMAIN)
-AUTHORIZE_URL = 'https://{0}/oauth/authorize'.format(BASE_DOMAIN)
+AUTHORIZE_URL = 'https://{0}/oauth/v2/auth'.format(BASE_DOMAIN)
