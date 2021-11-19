@@ -80,7 +80,7 @@ class ConfirmEmail(AuthView):
         # support this behavior;
         try:
             auth_identity = AuthIdentity.objects.select_related('user').get(
-                auth_provider=helper.auth_provider,
+                auth_provider=helper.provider_model,
                 ident=user[UNIQUE_USERID_FIELD],
             )
         except AuthIdentity.DoesNotExist:
