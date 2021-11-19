@@ -17,7 +17,7 @@ from .views import (
 class GenericOAuth2Provider(OAuth2Provider):
     access_token_url = ACCESS_TOKEN_URL
     authorize_url = AUTHORIZE_URL
-    name = 'OAuth2'
+    name = 'OWL'
     client_id = CLIENT_ID
     client_secret = CLIENT_SECRET
 
