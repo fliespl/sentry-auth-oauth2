@@ -42,7 +42,7 @@ class GenericClient(object):
         return self._request('/user/orgs', access_token)
 
     def get_user(self, access_token):
-        return self._request('/user', access_token)
+        return self._request('/user/me', access_token)
 
     def get_user_emails(self, access_token):
         return self._request('/user/emails', access_token)
