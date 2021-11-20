@@ -14,6 +14,7 @@ from .views import (
 
 
 class GenericOAuth2Provider(OAuth2Provider):
+    key = 'owl'
     access_token_url = ACCESS_TOKEN_URL
     authorize_url = AUTHORIZE_URL
     name = 'OWL'
