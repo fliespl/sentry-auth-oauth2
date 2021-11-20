@@ -19,7 +19,7 @@ tests_require = [
 
 setup(
     name='sentry-auth-oauth2',
-    version='0.2.5',
+    version='0.2.6',
     author='Sentry',
     author_email='support@getsentry.com',
     url='https://www.getsentry.com',

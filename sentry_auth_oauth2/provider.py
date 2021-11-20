@@ -5,12 +5,11 @@ from sentry.auth.providers.oauth2 import (
 
 from .client import GenericApiError, GenericClient
 from .constants import (
-    AUTHORIZE_URL, ACCESS_TOKEN_URL, CLIENT_ID, CLIENT_SECRET, SCOPE,
-    UNIQUE_USERID_FIELD
+    AUTHORIZE_URL, ACCESS_TOKEN_URL, CLIENT_ID, CLIENT_SECRET, SCOPE
 )
 
 from .views import (
-    ConfirmEmail, FetchUser, GenericConfigureView
+    FetchUser
 )
 
 
@@ -24,9 +23,6 @@ class GenericOAuth2Provider(OAuth2Provider):
     def __init__(self, org=None, **config):
         super(GenericOAuth2Provider, self).__init__(**config)
         self.org = org
-
-    def get_configure_view(self):
-        return GenericConfigureView.as_view()
 
     def get_auth_pipeline(self):
         return [
@@ -45,7 +41,6 @@ class GenericOAuth2Provider(OAuth2Provider):
                 client_secret=self.client_secret,
                 org=self.org,
             ),
-            ConfirmEmail(),
         ]
 
     def get_setup_pipeline(self):
@@ -63,18 +58,10 @@ class GenericOAuth2Provider(OAuth2Provider):
         data = state['data']
         user_data = state['user']
         return {
-            'id': user_data[UNIQUE_USERID_FIELD],
+            'type': 'owl',
+            'id': user_data['id'],
             'email': user_data['email'],
             'name': user_data['name'],
             'data': self.get_oauth_data(data),
+            'email_verified': True,
         }
-
-    def refresh_identity(self, auth_identity):
-        client = GenericClient(self.client_id, self.client_secret)
-        access_token = auth_identity.data['access_token']
-
-        try:
-            if not client.get_user(access_token):
-                raise IdentityNotValid
-        except GenericApiError as e:
-            raise IdentityNotValid(e)
