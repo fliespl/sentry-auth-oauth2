@@ -44,6 +44,12 @@ class GenericOAuth2Provider(OAuth2Provider):
             ),
         ]
 
+    def get_client_id(self):
+        return CLIENT_ID
+
+    def get_client_secret(self):
+        return CLIENT_SECRET
+
     def get_setup_pipeline(self):
         pipeline = self.get_auth_pipeline()
         return pipeline
