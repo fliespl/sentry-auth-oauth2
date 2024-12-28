@@ -1,5 +1,5 @@
 from django import forms
-from sentry.auth.view import AuthView, ConfigureView
+from sentry.auth.view import AuthView
 from sentry.models import AuthIdentity
 
 from .client import GenericClient
