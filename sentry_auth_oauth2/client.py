@@ -10,13 +10,13 @@ from .constants import API_DOMAIN
 
 
 class GenericApiError(Exception):
-    def __init__(self, message='', status=0):
+    def __init__(self, message='', status=0) -> None:
         super().__init__(message)
         self.status = status
 
 
 class GenericClient:
-    def __init__(self, client_id, client_secret):
+    def __init__(self, client_id, client_secret) -> None:
         self.client_id = client_id
         self.client_secret = client_secret
         self.http = http.build_session()
