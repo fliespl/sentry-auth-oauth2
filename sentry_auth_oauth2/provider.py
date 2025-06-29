@@ -13,7 +13,7 @@ class GenericOAuth2Provider(OAuth2Provider):
     access_token_url = ACCESS_TOKEN_URL
     authorize_url = AUTHORIZE_URL
     name = 'OWL'
-    key = 'owl'
+    key = 'oauth2'
 
     def get_client_id(self):
         return CLIENT_ID
