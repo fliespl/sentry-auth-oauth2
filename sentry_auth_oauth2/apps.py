@@ -8,4 +8,4 @@ class Config(AppConfig):
         from sentry import auth
         from .provider import GenericOAuth2Provider
 
-        auth.register('oauth2', GenericOAuth2Provider)
+        auth.register(GenericOAuth2Provider)
