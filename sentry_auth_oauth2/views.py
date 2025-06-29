@@ -21,14 +21,14 @@ class FetchUser(AuthView):
         self.client = GenericClient(client_id, client_secret)
         super().__init__(*args, **kwargs)
 
-    def handle(self, request: HttpRequest, pipeline):
-        access_token = pipeline.fetch_state('data')['access_token']
+    def handle(self, request: HttpRequest, helper):
+        access_token = helper.fetch_state('data')['access_token']
 
         user = self.client.get_user(access_token)
 
         if not user.get('name'):
             user['name'] = _get_name_from_email(user['email'])
 
-        pipeline.bind_state('user', user)
+        helper.bind_state('user', user)
 
-        return pipeline.next_step()
+        return helper.next_step()
