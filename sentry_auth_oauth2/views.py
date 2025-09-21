@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from sentry.auth.view import AuthView
 from sentry.models import AuthIdentity
+from sentry.auth.helper import AuthHelper
 
 from .client import GenericClient
 
@@ -21,14 +22,14 @@ class FetchUser(AuthView):
         self.client = GenericClient(client_id, client_secret)
         super().__init__(*args, **kwargs)
 
-    def handle(self, request: HttpRequest, helper):
-        access_token = helper.fetch_state('data')['access_token']
+    def handle(self, request: HttpRequest, pipeline: AuthHelper):
+        access_token = pipeline.fetch_state('data')['access_token']
 
         user = self.client.get_user(access_token)
 
         if not user.get('name'):
             user['name'] = _get_name_from_email(user['email'])
 
-        helper.bind_state('user', user)
+        pipeline.bind_state('user', user)
 
         return helper.next_step()
