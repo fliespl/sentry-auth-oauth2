@@ -32,4 +32,4 @@ class FetchUser(AuthView):
 
         pipeline.bind_state('user', user)
 
-        return helper.next_step()
+        return pipeline.next_step()
