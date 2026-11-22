@@ -8,9 +8,9 @@ sentry-auth-oauth2
 from setuptools import setup, find_packages
 
 
-install_requires = [
-    'sentry>=10.0.0',
-]
+# Sentry itself is intentionally not listed: it is no longer published on PyPI
+# and the plugin is always installed into an existing Sentry image/environment.
+install_requires = []
 
 tests_require = [
     'mock',
@@ -19,7 +19,7 @@ tests_require = [
 
 setup(
     name='sentry-auth-oauth2',
-    version='0.2.7',
+    version='0.3.0',
     author='Sentry',
     author_email='support@getsentry.com',
     url='https://www.getsentry.com',
@@ -43,5 +43,5 @@ setup(
         'Operating System :: OS Independent',
         'Topic :: Software Development'
     ],
-    python_requires='>=3.6',
+    python_requires='>=3.11',
 )

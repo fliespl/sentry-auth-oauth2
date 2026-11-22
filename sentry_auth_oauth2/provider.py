@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-from sentry.auth.exceptions import IdentityNotValid
+from collections.abc import Mapping
+from typing import Any
+
 from sentry.auth.providers.oauth2 import OAuth2Callback, OAuth2Login, OAuth2Provider
 from sentry.auth.view import AuthView
 
-from .client import GenericApiError, GenericClient
 from .constants import ACCESS_TOKEN_URL, AUTHORIZE_URL, CLIENT_ID, CLIENT_SECRET, SCOPE
 from .views import FetchUser
 
@@ -15,20 +16,20 @@ class GenericOAuth2Provider(OAuth2Provider):
     name = 'OWL'
     key = 'oauth2'
 
-    def get_client_id(self):
+    def get_client_id(self) -> str:
         return CLIENT_ID
 
-    def get_client_secret(self):
+    def get_client_secret(self) -> str:
         return CLIENT_SECRET
 
-    def __init__(self, org=None, **config) -> None:
+    def __init__(self, org: Any = None, **config: Any) -> None:
         super().__init__(**config)
         self.org = org
 
     def get_auth_pipeline(self) -> list[AuthView]:
         return [
             OAuth2Login(
-                authorize_url=self.authorize_url, 
+                authorize_url=self.authorize_url,
                 client_id=self.get_client_id(),
                 scope=SCOPE,
             ),
@@ -51,11 +52,10 @@ class GenericOAuth2Provider(OAuth2Provider):
     def get_refresh_token_url(self) -> str:
         return ACCESS_TOKEN_URL
 
-    def build_config(self, state):
-        return {
-        }
+    def build_config(self, state: Mapping[str, Any]) -> dict[str, Any]:
+        return {}
 
-    def build_identity(self, state):
+    def build_identity(self, state: Mapping[str, Any]) -> Mapping[str, Any]:
         data = state['data']
         user_data = state['user']
         return {

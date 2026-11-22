@@ -6,7 +6,7 @@ class Config(AppConfig):
 
     def ready(self) -> None:
         from sentry import auth
-        
+
         from .provider import GenericOAuth2Provider
 
         auth.register(GenericOAuth2Provider)
